@@ -1,0 +1,183 @@
+﻿<%@ Page Title="WebTail" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
+	CodeBehind="Default.aspx.cs" Inherits="WebTail.Default" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
+<style type="text/css">
+	
+	
+</style>
+ 
+	<link href="Styles/site.css" rel="stylesheet" type="text/css" />
+	<script src="Scripts/jquery-1.4.1.js" type="text/javascript"></script>
+	<script src="Scripts/js_extensions.js" type="text/javascript"></script>
+	<script src="Scripts/serviceProxy.js" type="text/javascript"></script>
+	
+</asp:Content>
+ 
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" Runat="Server">
+<div id="ActionPanel" style="width:100%" class="ActionPanel">
+   
+	<div style="display:inline; padding: 5px">
+		# Lines to read&nbsp;<asp:TextBox ID="tbLines" runat="server" Width="50px" style="text-align:right">40</asp:TextBox>
+	</div>
+	<div style="display:inline; padding: 5px">
+		poll interval: <input type="text" id="tailsecs" value="5" style="width: 20px" />
+	</div>
+	<div style="display:inline; padding: 5px">
+		<a id="tail" href="#">Start Tail</a>
+	</div>
+</div>
+<div id="lastUpdate" class="lastUpdate"></div>
+<div id="logDiv" class="logArea" ></div>
+ 
+<script type="text/javascript">
+	
+	var logTailId = -1;
+	var interval = null;
+
+	$(document).ready(function () {
+		$('#tail').click(function () {
+			var $tail = $(this);
+			if ($tail.text().indexOf('Stop') >= 0) {
+				$tail.text('Start Tail');
+				// clearTimeout(logTailId);
+				clearInterval(interval);
+				interval = null;
+			}
+			else {
+				$tail.text('Stop Tail');
+				doTail();
+			}
+			return false;
+		});
+
+		$('#viewLog').click(function () {
+			getLogData(getNumRows(), getLogFileName());
+			return false;
+		});
+
+		$('#tailsecs').keyup(function() {
+			setRefreshTime();
+		});
+
+		$('#tbLines').keyup(function () {
+			setRefreshTime();
+		});
+		
+		//read from querystring
+		if ($.getUrlVar('autostart') == 'true') {
+			$('#tail').text('Stop  Tail');
+			doTail();
+		}
+	});
+
+	$.extend({
+		getUrlVars: function () {
+			var vars = [], hash;
+			var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+			for (var i = 0; i < hashes.length; i++) {
+				hash = hashes[i].split('=');
+				vars.push(hash[0]);
+				vars[hash[0]] = hash[1];
+			}
+			return vars;
+		},
+		getUrlVar: function (name) {
+			return $.getUrlVars()[name];
+		}
+	});
+
+	function doTail() {
+		interval = setInterval(function () {
+			getLogData(getNumRows(), getLogFileName());
+		}, getNumSecs());
+	}
+	
+	function setRefreshTime () {
+		clearInterval(interval);
+		interval = null;
+		doTail();
+	}
+
+	function getLogData(numRows, logFile) {
+		document.title = "WebTail - " + logFile;
+		var proxy = new ServiceProxy("Default.aspx/");
+		proxy.isWcf = false;
+		proxy.invoke("GetLogTail", { logname: logFile, numrows: numRows },
+			function (data) {
+				displayLog(logFile, data);
+			  /*  if (isTail) {
+					var method = "getLogData(" + getNumRows() + ", '" + logFile + "', " + isTail + ")";
+					logTailId = setTimeout(method, getNumSecs());
+				}*/
+			},
+			function (errmsg) {
+				clearTimeout(logTailId);
+				alert(errmsg);
+			},
+			false);        // NOT bare
+	}
+
+
+	function clearLog() {
+		$('#logDiv').html('');
+	}
+
+	function displayLog(logFile, data) {
+		clearLog();
+		var now = new Date();
+		$('#lastUpdate').html("<span style='font-style:italic'>" + logFile + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; last update: " + now.format("n-j-y H:i:s ") + "</span>");
+		$('#title').html("<h1>WebTail <span class='logfilenameheader'> (" + logFile + ") </span></h1>");
+		var $log = $('#logDiv');
+		var logStr = "";
+		for (var property in data) {
+			jQuery.each(data[property], function(i, val) {
+				logStr += formatLine(val.toString());
+			});   
+		}
+		$log.html(logStr);
+	}
+
+	function getNumRows() {
+		var numRows = 30;
+		numRows = parseInt($('#<%=tbLines.ClientID %>').val(), 10);
+		if (isNaN(numRows)) { numRows = 45; }
+		return numRows;
+	}
+
+	function getNumSecs() {
+		var numSecs = 5000;
+		numSecs = parseInt($('#tailsecs').val(), 10);
+		if (isNaN(numSecs)) {
+			numSecs = 1000 * 5;
+		} else {
+			numSecs *= 1000;
+		}
+		return numSecs;
+	}
+
+	function getLogFileName() {
+
+		return $.getUrlVar('LogFile');
+	}
+
+	function formatLine(line) {
+		//console.log("line: " + line);
+		if (line == null)
+			return null;
+		line = encodeXml(line).toString();
+		if (line.toLowerCase().indexOf('info') === 0) {
+			return "<span class='info'>" + line + "</span><br/>";
+		} else if (line.toLowerCase().indexOf('error') === 0) {
+			return "<span class='error'>" + line + "</span><br/>";
+		} else if (line.toLowerCase().indexOf('warn') === 0) {
+			return "<span class='warn'>" + line + "</span><br/>";
+		} else if (line.toLowerCase().indexOf('debug') === 0) {
+			return "<span class='debug'>" + line + "</span><br/>";
+		}
+		return "<span>" + line + "</span><br/>";
+	}
+	
+</script>
+ 
+</asp:Content>

@@ -1,0 +1,88 @@
+#ignore thumbnails created by windows
+Thumbs.db
+#Ignore files build by Visual Studio
+*.obj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+*.VisualState.xml
+[Bb]in
+# Except dont ignore this dir
+!Devtests/[Bb]in
+!ModelRetail/[Bb]in
+[Dd]ebug*/
+[Tt]emp/
+*.lib
+*.sbr
+obj/
+[Rr]elease*/
+!Sonetto.Hammer.Test/Unifier/7/[Rr]elease
+!Sonetto.Hammer.Test/Data/[Rr]elease
+_ReSharper*/
+[Tt]est[Rr]esult*
+#Ignore Seapine Surround SCM repo files
+*.MySCMServerInfo
+#Ignore the Dev log4net sqlite Logging DB
+Logs/log4net.db
+Logs/log4net*.db
+#Ignore Solution Generated Folders and files
+TescoCategoryMapping/
+Sonetto/css/
+Sonetto/TescoGrocery/
+Sonetto/App_Dialogs/
+Sonetto/js/
+Sonetto/App_GlobalResources/TescoGroceryCategoryMapping.resx
+#Ignore BasketService Autogen files
+Sonetto.PricesAndPromotions/Sonetto.BasketService/Installer/Database/AllStoredProcedures.sql
+Sonetto.PricesAndPromotions/Sonetto.BasketService/Installer/Database/AllTriggers.sql
+Sonetto.PricesAndPromotions/Sonetto.BasketService/Installer/Database/AllFunctions.sql
+Sonetto.PricesAndPromotions/Sonetto.BasketService/Installer/Database/AllCouponStoredProcedures.sql
+#ignore other autogen files
+Sonetto/App_MasterTemplates/Categoriser.master
+Sonetto/App_MasterTemplates/DialogPage.Master
+Sonetto/App_MasterTemplates/OuterShell.Master
+Sonetto/App_UserControls/Common/PanelLauncher.ascx
+Sonetto/App_UserControls/Common/TabstripPageSwitcher.ascx
+#powershell out dir
+ModelSetup/Powershell/en-GB/[Tt]emp/*
+ModelSetup/Powershell/zh-CN/[Tt]emp/*
+ModelSetup/Powershell/en-GB/PPM/Templates/Data/*.bang
+ModelSetup/Powershell/en-GB/PPM/Templates/Data/*.bang.headers
+ModelSetup/Powershell/en-GB/PPM/Templates/Data/*.docSchema
+ModelSetup/Powershell/en-GB/ProductManagement/Documents/Data/*.bang
+ModelSetup/Powershell/en-GB/ProductManagement/Documents/Data/*.bang.headers
+ModelSetup/Powershell/en-GB/ProductManagement/Documents/Data/*.docSchema
+ModelSetup/Powershell/en-GB/SystemDocuments/Data/*.bang
+ModelSetup/Powershell/en-GB/SystemDocuments/Data/*.bang.headers
+ModelSetup/Powershell/en-GB/SystemDocuments/Data/*.docSchema
+# model core batch temp/out files
+[Mm]odel[Cc]ore[Bb]atch/[Dd]ata
+[Mm]odel[Cc]ore[Bb]atch/[Tt]emp
+# temporary import sql files
+SonettoServer/Importer/sqlscripts/*.txt
+SonettoServer/Importer/sqlscripts/*.bcp
+#NUnit Test Output Folders
+[Tt]est[Oo]utput/
+#
+##################################
+# Except dont ignore these Files #
+##################################
+!CommonLibs/WinZip/WZUNZIP.EXE
+!CommonLibs/SQLite/sqlite3.exe
+!CommonLibs/BuildTools/unzip.exe
+!CommonLibs/AjaxControlToolkit/3.0.20820.0/AjaxControlToolkit.pdb
+!BuildExclusion/Prototypes/VelocityPerformanceTest/VelocityTestConsole/VelocityTestConsole.csproj.user
+!BuildExclusion/Prototypes/PatternFoundation/CommonLibs/Unity12/*.pdb
+!*nxslt2.exe
