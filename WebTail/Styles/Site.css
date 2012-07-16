@@ -343,12 +343,19 @@ div.accountInfo
 	}
 	.debug
 	{
-		color:Gray;
+		color:lightgray;
 	}
 	
 	.error
 	{
 		background-color: Red;
+		color:White;
+		font-weight:bold;
+	}
+	
+	.success
+	{
+		background-color: green;
 		color:White;
 		font-weight:bold;
 	}

@@ -32,7 +32,7 @@
  
 <script type="text/javascript">
 	
-	var logTailId = -1;
+	var lastFileChangedDate = "";
 	var interval = null;
 
 	$(document).ready(function () {
@@ -103,16 +103,13 @@
 		document.title = "WebTail - " + logFile;
 		var proxy = new ServiceProxy("Default.aspx/");
 		proxy.isWcf = false;
-		proxy.invoke("GetLogTail", { logname: logFile, numrows: numRows },
+		proxy.invoke("GetLogTail", { logname: logFile, numrows: numRows, lastFileChangedDate: lastFileChangedDate },
 			function (data) {
 				displayLog(logFile, data);
-			  /*  if (isTail) {
-					var method = "getLogData(" + getNumRows() + ", '" + logFile + "', " + isTail + ")";
-					logTailId = setTimeout(method, getNumSecs());
-				}*/
 			},
 			function (errmsg) {
-				clearTimeout(logTailId);
+			    clearInterval(interval);
+			    interval = null;
 				alert(errmsg);
 			},
 			false);        // NOT bare
@@ -124,18 +121,32 @@
 	}
 
 	function displayLog(logFile, data) {
-		clearLog();
+		//clearLog();
 		var now = new Date();
-		$('#lastUpdate').html("<span style='font-style:italic'>" + logFile + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; last update: " + now.format("n-j-y H:i:s ") + "</span>");
-		$('#title').html("<h1>WebTail <span class='logfilenameheader'> (" + logFile + ") </span></h1>");
+		//$('#lastPoll').html("<span style='font-style:italic'>" + logFile + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; last poll: " + now.format("n-j-y H:i:s ") + "</span>");
+		//$('#title').html("<h1>WebTail <span class='logfilenameheader'> (" + logFile + ") </span></h1>");
 		var $log = $('#logDiv');
 		var logStr = "";
+	    var needUpdate = true;
 		for (var property in data) {
-			jQuery.each(data[property], function(i, val) {
-				logStr += formatLine(val.toString());
-			});   
+		    jQuery.each(data[property], function (i, val) {
+		        if (i == 0) {
+		            if (val == lastFileChangedDate) {
+		                needUpdate = false;
+		                return;
+		            }
+		            lastFileChangedDate = val;
+		        } else {
+		            logStr += formatLine(val.toString());
+		        }
+		    });
 		}
-		$log.html(logStr);
+	    
+		$('#lastUpdate').html("<span style='font-style:italic'>" + logFile + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; last poll: " + now.format("j/n/y H:i:s ") + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File Last Changed: " + lastFileChangedDate + "</span>");
+		if (needUpdate) {		    
+		    $('#title').html("<h1>WebTail <span class='logfilenameheader'> (" + logFile + ") </span></h1>");
+		    $log.html(logStr);
+		}
 	}
 
 	function getNumRows() {
@@ -167,15 +178,17 @@
 			return null;
 		line = encodeXml(line).toString();
 		if (line.toLowerCase().indexOf('info') === 0) {
-			return "<span class='info'>" + line + "</span><br/>";
+		    return "<span class='info'>" + line + "</span><br/>";
 		} else if (line.toLowerCase().indexOf('error') === 0) {
-			return "<span class='error'>" + line + "</span><br/>";
+		    return "<span class='error'>" + line + "</span><br/>";
 		} else if (line.toLowerCase().indexOf('warn') === 0) {
-			return "<span class='warn'>" + line + "</span><br/>";
+		    return "<span class='warn'>" + line + "</span><br/>";
 		} else if (line.toLowerCase().indexOf('debug') === 0) {
-			return "<span class='debug'>" + line + "</span><br/>";
+		    return "<span class='debug'>" + line + "</span><br/>";
+		} else if (line.toLowerCase().indexOf('success') === 0) {
+		    return "<span class='success'>" + line + "</span><br/>";
 		}
-		return "<span>" + line + "</span><br/>";
+	    return "<span>" + line + "</span><br/>";
 	}
 	
 </script>
