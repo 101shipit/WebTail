@@ -21,7 +21,7 @@
 		# Lines to read&nbsp;<asp:TextBox ID="tbLines" runat="server" Width="50px" style="text-align:right">40</asp:TextBox>
 	</div>
 	<div style="display:inline; padding: 5px">
-		poll interval: <input type="text" id="tailsecs" value="5" style="width: 20px" />
+		poll interval: <input type="text" id="tailsecs" value="5" style="width: 20px" /> seconds
 	</div>
 	<div style="display:inline; padding: 5px">
 		<a id="tail" href="#">Start Tail</a>
