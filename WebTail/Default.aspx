@@ -40,7 +40,6 @@
 			var $tail = $(this);
 			if ($tail.text().indexOf('Stop') >= 0) {
 				$tail.text('Start Tail');
-				// clearTimeout(logTailId);
 				clearInterval(interval);
 				interval = null;
 			}
@@ -121,10 +120,7 @@
 	}
 
 	function displayLog(logFile, data) {
-		//clearLog();
 		var now = new Date();
-		//$('#lastPoll').html("<span style='font-style:italic'>" + logFile + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; last poll: " + now.format("n-j-y H:i:s ") + "</span>");
-		//$('#title').html("<h1>WebTail <span class='logfilenameheader'> (" + logFile + ") </span></h1>");
 		var $log = $('#logDiv');
 		var logStr = "";
 	    var needUpdate = true;
@@ -143,7 +139,7 @@
 		}
 	    
 		$('#lastUpdate').html("<span style='font-style:italic'>" + logFile + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; last poll: " + now.format("j/n/y H:i:s ") + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File Last Changed: " + lastFileChangedDate + "</span>");
-		if (needUpdate) {		    
+		if (needUpdate) {
 		    $('#title').html("<h1>WebTail <span class='logfilenameheader'> (" + logFile + ") </span></h1>");
 		    $log.html(logStr);
 		}
