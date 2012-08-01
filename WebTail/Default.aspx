@@ -26,6 +26,7 @@
 	<div style="display:inline; padding: 5px">
 		<a id="tail" href="#">Start Tail</a>
 	</div>
+	<div class="status" id="statusDiv">&nbsp;&nbsp;&nbsp;</div>
 </div>
 <div id="lastUpdate" class="lastUpdate"></div>
 <div id="logDiv" class="logArea" ></div>
@@ -42,6 +43,8 @@
 				$tail.text('Start Tail');
 				clearInterval(interval);
 				interval = null;
+				var $status = $('#statusDiv');
+				$status.removeClass('activestatus');
 			}
 			else {
 				$tail.text('Stop Tail');
@@ -87,6 +90,8 @@
 	});
 
 	function doTail() {
+		var $status = $('#statusDiv');
+		$status.addClass('activestatus');
 		interval = setInterval(function () {
 			getLogData(getNumRows(), getLogFileName());
 		}, getNumSecs());
@@ -107,8 +112,8 @@
 				displayLog(logFile, data);
 			},
 			function (errmsg) {
-			    clearInterval(interval);
-			    interval = null;
+				clearInterval(interval);
+				interval = null;
 				alert(errmsg);
 			},
 			false);        // NOT bare
@@ -123,25 +128,25 @@
 		var now = new Date();
 		var $log = $('#logDiv');
 		var logStr = "";
-	    var needUpdate = true;
+		var needUpdate = true;
 		for (var property in data) {
-		    jQuery.each(data[property], function (i, val) {
-		        if (i == 0) {
-		            if (val == lastFileChangedDate) {
-		                needUpdate = false;
-		                return;
-		            }
-		            lastFileChangedDate = val;
-		        } else {
-		            logStr += formatLine(val.toString());
-		        }
-		    });
+			jQuery.each(data[property], function (i, val) {
+				if (i == 0) {
+					if (val == lastFileChangedDate) {
+						needUpdate = false;
+						return;
+					}
+					lastFileChangedDate = val;
+				} else {
+					logStr += formatLine(val.toString());
+				}
+			});
 		}
-	    
+		
 		$('#lastUpdate').html("<span style='font-style:italic'>" + logFile + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; last poll: " + now.format("j/n/y H:i:s ") + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File Last Changed: " + lastFileChangedDate + "</span>");
 		if (needUpdate) {
-		    $('#title').html("<h1>WebTail <span class='logfilenameheader'> (" + logFile + ") </span></h1>");
-		    $log.html(logStr);
+			$('#title').html("<h1>WebTail <span class='logfilenameheader'> (" + logFile + ") </span></h1>");
+			$log.html(logStr);
 		}
 	}
 
@@ -174,17 +179,17 @@
 			return null;
 		line = encodeXml(line).toString();
 		if (line.toLowerCase().indexOf('info') === 0) {
-		    return "<span class='info'>" + line + "</span><br/>";
+			return "<span class='info'>" + line + "</span><br/>";
 		} else if (line.toLowerCase().indexOf('error') === 0) {
-		    return "<span class='error'>" + line + "</span><br/>";
+			return "<span class='error'>" + line + "</span><br/>";
 		} else if (line.toLowerCase().indexOf('warn') === 0) {
-		    return "<span class='warn'>" + line + "</span><br/>";
+			return "<span class='warn'>" + line + "</span><br/>";
 		} else if (line.toLowerCase().indexOf('debug') === 0) {
-		    return "<span class='debug'>" + line + "</span><br/>";
+			return "<span class='debug'>" + line + "</span><br/>";
 		} else if (line.toLowerCase().indexOf('success') === 0) {
-		    return "<span class='success'>" + line + "</span><br/>";
+			return "<span class='success'>" + line + "</span><br/>";
 		}
-	    return "<span>" + line + "</span><br/>";
+		return "<span>" + line + "</span><br/>";
 	}
 	
 </script>

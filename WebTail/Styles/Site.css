@@ -367,3 +367,14 @@ div.accountInfo
 	    display: inline;
 	    font-size:10pt;
 	}
+	
+	.status {
+	    border-radius: 50%;
+	    display: inline;
+	    right:30px;
+	    position:absolute;
+	    background-color: red;
+	}
+	.activestatus {
+	    background-color: green;
+	}
