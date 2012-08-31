@@ -17,10 +17,10 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" Runat="Server">
 <div id="ActionPanel" style="width:100%" class="ActionPanel">
    
-	<div style="float: left; padding: 5px">
+	<div class="ActionPanelItem">
 		# Lines to read&nbsp;<asp:TextBox ID="tbLines" runat="server" Width="50px" style="text-align:right">40</asp:TextBox>
 	</div>
-	<div style="float: left; padding: 5px">
+	<div class="ActionPanelItem">
 		poll interval: <input type="text" id="tailsecs" value="5" style="width: 20px" /> seconds
 	</div>
 	<div class="menu" >
