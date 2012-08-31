@@ -303,7 +303,7 @@ div.accountInfo
 		padding: 1%;
 		background: white;
 		font-size:9pt; 
-		height:600px; 
+		/*height:600px; */
 		overflow:auto;
 		white-space: nowrap;
 		border-radius: 5px;
