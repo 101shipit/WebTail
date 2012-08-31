@@ -292,7 +292,7 @@ div.accountInfo
 .lastUpdate
 	{
 		width: 100%;
-		padding: 5px 25px 5px 5px;
+		padding: 5px 5px 10px 5px;
 		font-size: .8em;
 		float: left;
 	}
@@ -345,12 +345,12 @@ div.accountInfo
 	{
 		font-style: italic;
 		color: #f9f9f9;
-	    display: inline;
-	    font-size:10pt;
+		display: inline;
+		font-size:10pt;
 	}
 	
 	.status {
-	    float: left;
+		float: left;
 	   height:32px;
 	   width:32px;
 	}
@@ -359,5 +359,9 @@ div.accountInfo
 	}
 	.ActionPanel{
 		float: left;	
+	}
+	.ActionPanelItem {
+	float: left;
+	padding: 5px 45px 15px 5px;
 	}
 	
