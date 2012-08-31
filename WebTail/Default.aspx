@@ -17,22 +17,26 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" Runat="Server">
 <div id="ActionPanel" style="width:100%" class="ActionPanel">
    
-	<div style="display:inline; padding: 5px">
+	<div style="float: left; padding: 5px">
 		# Lines to read&nbsp;<asp:TextBox ID="tbLines" runat="server" Width="50px" style="text-align:right">40</asp:TextBox>
 	</div>
-	<div style="display:inline; padding: 5px">
+	<div style="float: left; padding: 5px">
 		poll interval: <input type="text" id="tailsecs" value="5" style="width: 20px" /> seconds
 	</div>
-	<div style="display:inline; padding: 5px">
-		<a id="tail" href="#">Start Tail</a>
+	<div class="menu" >
+		<ul>
+		<li>
+			<a id="tail" href="#">Start Tail</a>
+		</li>
+		</ul>
 	</div>
-	<div class="status" id="statusDiv">&nbsp;&nbsp;&nbsp;</div>
+	<div class="status" id="statusDiv"></div>
 </div>
 <div id="lastUpdate" class="lastUpdate"></div>
 <div id="logDiv" class="logArea" ></div>
  
 <script type="text/javascript">
-	
+
 	var lastFileChangedDate = "";
 	var interval = null;
 
@@ -58,14 +62,14 @@
 			return false;
 		});
 
-		$('#tailsecs').keyup(function() {
+		$('#tailsecs').keyup(function () {
 			setRefreshTime();
 		});
 
 		$('#tbLines').keyup(function () {
 			setRefreshTime();
 		});
-		
+
 		//read from querystring
 		if ($.getUrlVar('autostart') == 'true') {
 			$('#tail').text('Stop  Tail');
@@ -96,8 +100,8 @@
 			getLogData(getNumRows(), getLogFileName());
 		}, getNumSecs());
 	}
-	
-	function setRefreshTime () {
+
+	function setRefreshTime() {
 		clearInterval(interval);
 		interval = null;
 		doTail();
@@ -142,7 +146,7 @@
 				}
 			});
 		}
-		
+
 		$('#lastUpdate').html("<span style='font-style:italic'>" + logFile + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; last poll: " + now.format("d/m/Y H:i:s ") + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File Last Changed: " + lastFileChangedDate + "</span>");
 		if (needUpdate) {
 			$('#title').html("<h1>WebTail <span class='logfilenameheader'> (" + logFile + ") </span></h1>");
