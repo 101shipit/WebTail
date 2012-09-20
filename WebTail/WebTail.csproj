@@ -53,18 +53,12 @@
   <ItemGroup>
     <Content Include="Scripts\jquery-1.8.1.js" />
     <Content Include="Scripts\jquery-1.8.1.min.js" />
-    <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\js_extensions.js" />
     <Content Include="Scripts\ServiceProxy.js" />
-    <Content Include="Styles\i\loading-bounce.gif" />
     <Content Include="Styles\i\loading.gif" />
-    <Content Include="Styles\i\loading1.gif" />
     <Content Include="Styles\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.4.1.js" />
-    <Content Include="Scripts\jquery-1.4.1.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
