@@ -8,10 +8,9 @@
 </style>
  
 	<link href="Styles/site.css" rel="stylesheet" type="text/css" />
-	<script src="Scripts/jquery-1.4.1.js" type="text/javascript"></script>
+	<script src="Scripts/jquery-1.8.1.min.js" type="text/javascript"></script>
+	<script src="Scripts/ServiceProxy.js" type="text/javascript"></script>
 	<script src="Scripts/js_extensions.js" type="text/javascript"></script>
-	<script src="Scripts/serviceProxy.js" type="text/javascript"></script>
-	
 </asp:Content>
  
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" Runat="Server">
@@ -133,19 +132,19 @@
 		var $log = $('#logDiv');
 		var logStr = "";
 		var needUpdate = true;
-		for (var property in data) {
-			jQuery.each(data[property], function (i, val) {
-				if (i == 0) {
-					if (val == lastFileChangedDate) {
-						needUpdate = false;
-						return;
-					}
-					lastFileChangedDate = val;
-				} else {
-					logStr += formatLine(val.toString());
+		
+		jQuery.each(data, function (i, val) {
+			if (i == 0) {
+				if (val == lastFileChangedDate) {
+					needUpdate = false;
+					return;
 				}
-			});
-		}
+				lastFileChangedDate = val;
+			} else {
+				logStr += formatLine(val.toString());
+			}
+		});
+		
 
 		$('#lastUpdate').html("<span style='font-style:italic'>" + logFile + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; last poll: " + now.format("d/m/Y H:i:s ") + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File Last Changed: " + lastFileChangedDate + "</span>");
 		if (needUpdate) {
