@@ -56,7 +56,7 @@
     <Content Include="Scripts\js_extensions.js" />
     <Content Include="Scripts\ServiceProxy.js" />
     <Content Include="Styles\i\loading.gif" />
-    <Content Include="Styles\Site.css" />
+    <Content Include="Styles\site.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />

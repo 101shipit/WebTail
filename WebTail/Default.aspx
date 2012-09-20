@@ -2,12 +2,8 @@
 	CodeBehind="Default.aspx.cs" Inherits="WebTail.Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
-<style type="text/css">
-	
-	
-</style>
- 
-	<link href="Styles/site.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">	
+	</style>
 	<script src="Scripts/jquery-1.8.1.min.js" type="text/javascript"></script>
 	<script src="Scripts/ServiceProxy.js" type="text/javascript"></script>
 	<script src="Scripts/js_extensions.js" type="text/javascript"></script>
