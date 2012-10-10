@@ -143,9 +143,13 @@
 				logStr += formatLine(val.toString());
 			}
 		});
-
-
-$('#lastUpdate').html("<span style='font-style:italic'>" + logFile + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File Created: " + FileCreatedDate + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; last poll: " + now.format("d/m/Y H:i:s ") + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File Last Changed: " + fileLastChangedDate + "</span>");
+		
+		var logFileLink = logFile.replace("d:\\SonInternalLink\\", "http://ilonsysfs02/SonettoBuildLogs/");
+		if (logFileLink != logFile) {
+			logFileLink = "<a href='" + logFileLink + "'>" + logFile + "</a>";
+		}
+		
+		$('#lastUpdate').html("<span style='font-style:italic'>" + logFileLink + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File Created: " + FileCreatedDate + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; last poll: " + now.format("d/m/Y H:i:s ") + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File Last Changed: " + fileLastChangedDate + "</span>");
 		if (needUpdate) {
 			$('#title').html("<h1>WebTail <span class='logfilenameheader'> (" + logFile + ") </span></h1>");
 			$log.html(logStr);
