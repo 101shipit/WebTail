@@ -16,7 +16,7 @@ namespace WebTail
         #region REST_api
 
         [System.Web.Services.WebMethod]
-        public static IList<string> GetLogTail(string logname, string numrows, string lastFileChangedDate)
+        public static IList<string> GetLogTail(string logname, string numrows, string fileLastChangedDate)
         {
             var lineCnt = 1;
             var lines = new List<string>();
@@ -36,7 +36,8 @@ namespace WebTail
 
 
             var fileLastWritten = File.GetLastWriteTime(logFile);
-            if (Convert.ToString(fileLastWritten) == lastFileChangedDate)
+            var fileCreatedDate = File.GetCreationTime(logFile);
+            if (Convert.ToString(fileLastWritten) == fileLastChangedDate)
             {
                 lines.Add(Convert.ToString(fileLastWritten));
                 return lines;
@@ -51,6 +52,7 @@ namespace WebTail
                 if (lineCnt == maxLines) break;
                 lineCnt++;
             }
+            lines.Add(Convert.ToString(fileCreatedDate));
             lines.Add(Convert.ToString(fileLastWritten));
             lines.Reverse();
             return lines;

@@ -32,7 +32,8 @@
  
 <script type="text/javascript">
 
-	var lastFileChangedDate = "";
+	var fileLastChangedDate = "";
+	var FileCreatedDate = "";
 	var interval = null;
 
 	$(document).ready(function () {
@@ -106,7 +107,7 @@
 		document.title = "WebTail - " + logFile;
 		var proxy = new ServiceProxy("Default.aspx/");
 		proxy.isWcf = false;
-		proxy.invoke("GetLogTail", { logname: logFile, numrows: numRows, lastFileChangedDate: lastFileChangedDate },
+		proxy.invoke("GetLogTail", { logname: logFile, numrows: numRows, fileLastChangedDate: fileLastChangedDate },
 			function (data) {
 				displayLog(logFile, data);
 			},
@@ -131,18 +132,20 @@
 		
 		jQuery.each(data, function (i, val) {
 			if (i == 0) {
-				if (val == lastFileChangedDate) {
+				if (val == fileLastChangedDate) {
 					needUpdate = false;
 					return;
 				}
-				lastFileChangedDate = val;
-			} else {
+				fileLastChangedDate = val;
+			} else if (i == 1) {
+				FileCreatedDate = val;
+			}else{
 				logStr += formatLine(val.toString());
 			}
 		});
-		
 
-		$('#lastUpdate').html("<span style='font-style:italic'>" + logFile + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; last poll: " + now.format("d/m/Y H:i:s ") + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File Last Changed: " + lastFileChangedDate + "</span>");
+
+$('#lastUpdate').html("<span style='font-style:italic'>" + logFile + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File Created: " + FileCreatedDate + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; last poll: " + now.format("d/m/Y H:i:s ") + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File Last Changed: " + fileLastChangedDate + "</span>");
 		if (needUpdate) {
 			$('#title').html("<h1>WebTail <span class='logfilenameheader'> (" + logFile + ") </span></h1>");
 			$log.html(logStr);
