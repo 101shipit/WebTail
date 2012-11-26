@@ -30,6 +30,7 @@ namespace WebTail
             if (!File.Exists(logFile))
             {
                 lines.Add("date");
+                lines.Add("date");
                 lines.Add("WARN: Log File " + logFile + " Doesnt Exist Yet!");
                 return lines;
             }
@@ -43,15 +44,21 @@ namespace WebTail
                 return lines;
             }
 
-            
-            var br = new BackwardReader(logFile);
-            while (!br.SOF)
+
+            using (var fs = new FileStream(logFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                var line = br.Readline();
-                lines.Add(line + Environment.NewLine);
-                if (lineCnt == maxLines) break;
-                lineCnt++;
+                using (var rsr = new ReverseStreamReader(fs))
+                {
+                    while (!rsr.Sof)
+                    {
+                        var line = rsr.ReadLine();
+                        lines.Add(line + Environment.NewLine);
+                        if (lineCnt == maxLines) break;
+                        lineCnt++;
+                    }
+                }
             }
+
             lines.Add(Convert.ToString(fileCreatedDate));
             lines.Add(Convert.ToString(fileLastWritten));
             lines.Reverse();
