@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.UI;
+using WebTail.Code;
 
 namespace WebTail
 {
