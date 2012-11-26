@@ -2,7 +2,7 @@
 using System.Text;
 using System.IO;
 
-namespace WebTail
+namespace WebTail.Code
 {
     public class BackwardReader : IDisposable
     {

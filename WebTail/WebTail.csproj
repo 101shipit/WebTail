@@ -80,7 +80,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackwardsReader.cs" />
+    <Compile Include="Code\BackwardsReader.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -97,7 +97,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ReverseStreamReader.cs" />
+    <Compile Include="Code\ReverseStreamReader.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
