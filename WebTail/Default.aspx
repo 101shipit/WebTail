@@ -48,22 +48,15 @@
 		});
 
         //watch for settings changed
-		$('#tailsecs').keyup(function () {
+	    $('#tailsecs').bind("keyup click",function () {
 		    w.applySettings();
 		});
-		$('#tailsecs').click(function () {
+	    $('#tbLines').bind("keyup click", function () {
 		    w.applySettings();
 		});
-		$('#tbLines').keyup(function () {
-		    w.applySettings();
-		});
-		$('#tbLines').click(function () {
-		    w.applySettings();
-		});
-
+		
 		//start if set autostart from querystring
 		if ($.getUrlVar('autostart') == 'true') {
-		    $('#tail').text('Stop  Tail');
 			w.doTail();
 		}
 	});
@@ -89,7 +82,7 @@
         applySettings: function () {
             var w = WebTail;
 	        clearTimeout(w.settingsTimeout);
-	        w.settingsTimeout = setTimeout(function() { w.setRefreshTime(); }, 800);
+	        w.settingsTimeout = setTimeout(function() { w.setRefreshTime(); }, 1000);
 	    },
 
         doTail: function () {
@@ -169,7 +162,7 @@
 	    },
 
 	    getNumRows: function() {
-	        var numRows = 45;
+	        var numRows;
 	        numRows = parseInt($('#tbLines').val(), 10);
 	        if (isNaN(numRows)) {
 	            numRows = 45;
@@ -178,7 +171,7 @@
 	    },
 
 	    getNumSecs: function() {
-	        var numSecs = 5000;
+	        var numSecs;
 	        numSecs = parseInt($('#tailsecs').val(), 10);
 	        if (isNaN(numSecs)) {
 	            numSecs = 1000 * 5;
