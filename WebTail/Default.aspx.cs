@@ -17,15 +17,14 @@ namespace WebTail
         #region REST_api
 
         [System.Web.Services.WebMethod]
-        public static IList<string> GetLogTail(string logname, string numrows, string fileLastChangedDate)
+        public static IList<string> GetLogTail(string logname, int numrows, string fileLastChangedDate)
         {
             var lineCnt = 1;
             var lines = new List<string>();
-            int maxLines;
 
-            if (!int.TryParse(numrows, out maxLines))
+            if (numrows <= 0)
             {
-                maxLines = 100;
+                numrows = 100;
             }
             var logFile = HttpUtility.UrlDecode(logname);
             if (!File.Exists(logFile))
@@ -54,7 +53,7 @@ namespace WebTail
                     {
                         var line = rsr.ReadLine();
                         lines.Add(line + Environment.NewLine);
-                        if (lineCnt == maxLines) break;
+                        if (lineCnt == numrows) break;
                         lineCnt++;
                     }
                 }
